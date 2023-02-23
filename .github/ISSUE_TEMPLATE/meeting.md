@@ -9,7 +9,7 @@ assignees: detlefarend, syam47
 
 **Before the meeting**
 - [ ] Agenda prepared
-- [ ]Room or Zoom prepared
+- [ ] Room or Zoom prepared
 - [ ] Attendees invited
 
 **Agenda**

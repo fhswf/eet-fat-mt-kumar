@@ -3,6 +3,8 @@ from mlpro.bf.various import Log
 from mlpro.oa.streams import *
 from mlpro_int_river.wrappers.clusteranalyzers.kmeans import WrRiverKMeans2MLPro
 from mlpro.oa.streams.tasks.anomalydetectors.cb_detectors.drift_detector import ClusterDriftDetector
+from mlpro.oa.streams.tasks.normalizers import NormalizerMinMax
+from mlpro.oa.streams.tasks.boundarydetectors import BoundaryDetector
 
 
 
@@ -42,6 +44,26 @@ class MyScenario(OAScenario):
 
         # 1.2.2 Creation of tasks and add them to the workflow
 
+        task_bd = BoundaryDetector( p_name='T1 - Boundary Detector', 
+                                    p_ada=p_ada, 
+                                    p_visualize=p_visualize,
+                                    p_logging=p_logging )
+        
+        workflow.add_task(p_task = task_bd)
+        
+        
+        task_norm = NormalizerMinMax( p_name='T2 - MinMax Normalizer', 
+                                      p_ada=p_ada, 
+                                      p_visualize=p_visualize,
+                                      p_logging=p_logging)
+        
+        workflow.add_task(p_task = task_norm, p_pred_tasks=[task_bd])
+
+        task_bd.register_event_handler(
+            p_event_id=BoundaryDetector.C_EVENT_ADAPTED,
+            p_event_handler=task_norm.adapt_on_event
+            )
+
         # Cluster Analyzer
         task_clusterer = WrRiverKMeans2MLPro( p_name='#1: KMeans@River',
                                               p_n_clusters=4,
@@ -53,14 +75,16 @@ class MyScenario(OAScenario):
 
         workflow.add_task(p_task = task_clusterer)
 
+        task_norm.register_event_handler( p_event_id=NormalizerMinMax.C_EVENT_ADAPTED,
+                                                 p_event_handler=task_clusterer.renormalize_on_event )
+
+
         # Anomaly Detector
         task_anomaly_detector = ClusterDriftDetector(p_clusterer=task_clusterer,
                                                      p_with_time_calculation=False,
-                                                     p_velocity_threshold_factor=10.0,
-                                                     p_acceleration_threshld_factor=10.0,
-                                                     p_min_velocity_threshold=1.5,
-                                                     p_initial_skip=1000,
-                                                     p_buffer_size=100,
+                                                     p_instantaneous_velocity_change_detection=True,
+                                                     p_min_velocity_threshold=0.01,
+                                                     p_initial_skip=400,
                                                      p_visualize=p_visualize,
                                                      p_logging=p_logging)
 
@@ -72,7 +96,7 @@ class MyScenario(OAScenario):
 
 
 # 2 Prepare for test
-cycle_limit = 2500
+cycle_limit = 3000
 #logging     = Log.C_LOG_NOTHING
 logging     = Log.C_LOG_ALL
 visualize   = True
@@ -101,7 +125,7 @@ myscenario.log(Log.C_LOG_TYPE_W, 'Duration [sec]:', round(duraction_sec,2), ', C
 
 
 # 5 Summary
-anomalies         = myscenario.get_workflow()._tasks[1].get_anomalies()
+anomalies         = myscenario.get_workflow()._tasks[3].get_anomalies()
 detected_anomalies= len(anomalies)
 
 myscenario.log(Log.C_LOG_TYPE_W, '-------------------------------------------------------')

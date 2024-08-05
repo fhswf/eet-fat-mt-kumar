@@ -1,7 +1,7 @@
 from mlpro.bf.streams.streams import *
 from mlpro.bf.various import Log
 from mlpro.oa.streams import *
-from mlpro_int_river.wrappers.clusteranalyzers.kmeans import WrRiverKMeans2MLPro
+from mlpro_int_river.wrappers.clusteranalyzers import WrRiverStreamKMeans2MLPro
 from mlpro.oa.streams.tasks.anomalydetectors.cb_detectors.drift_detector import ClusterDriftDetector
 
 
@@ -18,13 +18,13 @@ class MyScenario(OAScenario):
 
         # 1.1 Get MLPro benchmark Clutser Generator
         stream = StreamMLProClusterGenerator(p_num_dim=3,
-                                             p_num_instances=10000,
+                                             p_num_instances=5000,
                                              p_num_clusters=5,
                                              p_radii=[100],
                                              p_velocities=[0.0],
                                              p_change_velocities=True,
-                                             p_changed_velocities=[0.6, 1.0, 0.3],
-                                             p_points_of_change_velocities=[1200, 1500, 1700],
+                                             p_changed_velocities=[0.3, 0.8, 0.6],
+                                             p_points_of_change_velocities=[1000, 1200, 1500],
                                              p_num_clusters_for_change_velocities=3,
                                              p_seed=23,
                                              p_logging=p_logging)
@@ -43,24 +43,23 @@ class MyScenario(OAScenario):
         # 1.2.2 Creation of tasks and add them to the workflow
 
         # Cluster Analyzer
-        task_clusterer = WrRiverKMeans2MLPro( p_name='#1: KMeans@River',
-                                              p_n_clusters=5,
-                                              p_halflife=0.1, 
-                                              p_sigma=3, 
-                                              p_seed=42,
-                                              p_visualize=p_visualize,
-                                              p_logging=p_logging )
+        task_clusterer = WrRiverStreamKMeans2MLPro( p_name='StreamKMeans@River',
+                                                   p_chunk_size=50,
+                                                   p_n_clusters=5,
+                                                   p_halflife=0.8,
+                                                   p_sigma=5,
+                                                   p_seed=44,
+                                                   p_visualize=p_visualize,
+                                                   p_logging=p_logging )
 
         workflow.add_task(p_task = task_clusterer)
 
         # Anomaly Detector
         task_anomaly_detector = ClusterDriftDetector(p_clusterer=task_clusterer,
                                                      p_with_time_calculation=False,
-                                                     p_velocity_threshold_factor=10.0,
-                                                     p_acceleration_threshld_factor=10.0,
-                                                     p_min_velocity_threshold=1.5,
-                                                     p_initial_skip=1000,
-                                                     p_buffer_size=100,
+                                                     p_instantaneous_velocity_change_detection=True,
+                                                     p_min_velocity_threshold=0.5,
+                                                     p_initial_skip=400,
                                                      p_visualize=p_visualize,
                                                      p_logging=p_logging)
 

@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/600819095.svg)](https://zenodo.org/doi/10.5281/zenodo.13220630)
 # Master's Thesis on Online-adaptive Cluster-based Anomaly Detection
 
 This repository provides the reproducible Python scripts for the experiments provided in the Master's Thesis named Online-adaptive Cluster-based Anomaly Detection, authored by Syamraj Purushamparambil Satheesh Kumar, as a part of the course "Systems Engineering and Engineering Management" in the Department of "Electrical Energy Engineering", supervised by Dipl.-Info. Detlef Arend.

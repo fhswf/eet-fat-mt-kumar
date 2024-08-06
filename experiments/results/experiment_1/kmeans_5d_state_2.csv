@@ -1,0 +1,11 @@
+Index,Anomaly Type,Instance,Clusters
+1,Cluster drift Anomaly,542,"{0: {'centroid': [621.461, -929.723, 208.817, -234.728, 337.94], 'velocity': 1.501, 'acceleration': 0.167}}"
+2,Cluster drift Anomaly,692,"{0: {'centroid': [621.461, -929.723, 208.817, -234.728, 337.94], 'velocity': 0.948, 'acceleration': 0.247}}"
+3,Cluster drift Anomaly,1162,"{1: {'centroid': [-835.58, -349.61, -517.083, 69.601, 399.757], 'velocity': 1.753, 'acceleration': 0.281}}"
+4,Cluster drift Anomaly,1265,"{0: {'centroid': [621.461, -929.723, 208.817, -234.728, 337.94], 'velocity': 1.52, 'acceleration': 0.169}}"
+5,Cluster drift Anomaly,1392,"{2: {'centroid': [-84.262, -274.993, 157.562, -233.354, -303.156], 'velocity': 1.551, 'acceleration': 0.111}}"
+6,Cluster drift Anomaly,1415,"{0: {'centroid': [621.461, -929.723, 208.817, -234.728, 337.94], 'velocity': 0.567, 'acceleration': 0.221}}"
+7,Cluster drift Anomaly,1664,"{0: {'centroid': [621.461, -929.723, 208.817, -234.728, 337.94], 'velocity': 1.517, 'acceleration': 0.192}}"
+8,Cluster drift Anomaly,1814,"{0: {'centroid': [621.461, -929.723, 208.817, -234.728, 337.94], 'velocity': 0.916, 'acceleration': 0.184}}"
+9,Cluster drift Anomaly,1899,"{2: {'centroid': [-84.262, -274.993, 157.562, -233.354, -303.156], 'velocity': 1.263, 'acceleration': 0.334}}"
+10,Cluster drift Anomaly,1917,"{2: {'centroid': [-84.262, -274.993, 157.562, -233.354, -303.156], 'velocity': 1.606, 'acceleration': 0.272}}"

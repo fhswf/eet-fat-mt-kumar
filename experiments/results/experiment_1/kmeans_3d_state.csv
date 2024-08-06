@@ -1,0 +1,5 @@
+Index,Anomaly Type,Instance,Clusters
+1,Cluster drift Anomaly,1138,"{0: {'centroid': [103.307, -598.711, -361.494], 'velocity': 1.018, 'acceleration': 0.164}}"
+2,Cluster drift Anomaly,1378,"{0: {'centroid': [103.307, -598.711, -361.494], 'velocity': 0.85, 'acceleration': 0.065}}"
+3,Cluster drift Anomaly,1422,"{2: {'centroid': [-301.775, -549.349, -74.641], 'velocity': 1.097, 'acceleration': 0.129}}"
+4,Cluster drift Anomaly,1921,"{0: {'centroid': [103.307, -598.711, -361.494], 'velocity': 1.085, 'acceleration': 0.109}}"
